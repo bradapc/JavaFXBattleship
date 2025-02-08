@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        Scene mainMenuScene = new Scene(new MainMenuPane());
+        Scene mainMenuScene = new Scene(new MainMenuPane(primaryStage));
         primaryStage.setScene(mainMenuScene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Battleship - Main Menu");
