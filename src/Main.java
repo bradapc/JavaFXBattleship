@@ -8,6 +8,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Scene mainMenuScene = new Scene(new MainMenuPane());
         primaryStage.setScene(mainMenuScene);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Battleship - Main Menu");
         primaryStage.show();
     }
