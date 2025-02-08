@@ -13,5 +13,11 @@ public class GameSquare extends Rectangle {
         this.col = col;
         setStroke(Color.BLACK);
         setFill(Color.AQUA);
+        setOnMouseEntered(e -> {
+           setFill(Color.AQUAMARINE);
+        });
+        setOnMouseExited(e -> {
+            setFill(Color.AQUA);
+        });
     }
 }
