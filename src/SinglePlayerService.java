@@ -15,9 +15,5 @@ public class SinglePlayerService {
         initializerStage.setScene(initializerScene);
         initializerStage.setTitle("Choose Ship Placements");
         initializerStage.show();
-
-        while (initializerGameBoard.getShipsToPlace() > 0) {
-            break;
-        }
     }
 }
