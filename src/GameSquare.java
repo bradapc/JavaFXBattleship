@@ -4,61 +4,53 @@ import javafx.scene.shape.Rectangle;
 public class GameSquare extends Rectangle {
     private int row;
     private int col;
-    private GameBoard parentGameBoard;
+    private InitializerGameBoard parentInitializerGameBoard;
     private String type;
     public static final int HEIGHT = 30;
     public static final int WIDTH = 30;
 
-    public GameSquare(GameBoard parentGameBoard, int width, int height, int row, int col) {
+    public GameSquare(InitializerGameBoard parentInitializerGameBoard, int width, int height, int row, int col) {
         super(width, height);
         type = "empty";
         this.row = row;
         this.col = col;
-        this.parentGameBoard = parentGameBoard;
+        this.parentInitializerGameBoard = parentInitializerGameBoard;
         setStroke(Color.BLACK);
         setFill(Color.AQUA);
-        setOnMouseEntered(e -> handleMouseEntry(parentGameBoard.getType()));
-        setOnMouseExited(e -> handleMouseExit(parentGameBoard.getType()));
+        setOnMouseEntered(e -> handleMouseEntry());
+        setOnMouseExited(e -> handleMouseExit());
         setOnMouseClicked(e -> handleMouseClick());
     }
 
     public void handleMouseClick() {
-        parentGameBoard.tryToInitialize(row, col);
+        parentInitializerGameBoard.tryToInitialize(row, col);
     }
 
-    public void handleMouseExit(String type) {
-        if (type.equals("user") || type.equals("enemy")) {
-            setFill(Color.AQUA);
-        } else {
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 10; j++) {
-                    GameSquare current = parentGameBoard.getGameSquare(i, j);
-                    if (current.getType().equals("empty")) {
-                        current.setFill(Color.AQUA);
-                    }
+    public void handleMouseExit() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                GameSquare current = parentInitializerGameBoard.getGameSquare(i, j);
+                if (current.getType().equals("empty")) {
+                    current.setFill(Color.AQUA);
                 }
             }
         }
     }
 
-    public void handleMouseEntry(String type) {
-        if (type.equals("destroyer")) {
-            return;
-        } else {
-            for (int i = 0; i < parentGameBoard.getCurrentShipSize(); i++) {
-                if (col + parentGameBoard.getCurrentShipSize() - 1 < 10) {
-                    if (col + i < 10) {
-                        GameSquare current = parentGameBoard.getGameSquare(row, col + i);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.YELLOW);
-                        }
+    public void handleMouseEntry() {
+        for (int i = 0; i < parentInitializerGameBoard.getCurrentShipSize(); i++) {
+            if (col + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
+                if (col + i < 10) {
+                    GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
+                    if (current.getType().equals("empty")) {
+                        current.setFill(Color.YELLOW);
                     }
-                } else {
-                    if (col + i < 10) {
-                        GameSquare current = parentGameBoard.getGameSquare(row, col + i);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.RED);
-                        }
+                }
+            } else {
+                if (col + i < 10) {
+                    GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
+                    if (current.getType().equals("empty")) {
+                        current.setFill(Color.RED);
                     }
                 }
             }

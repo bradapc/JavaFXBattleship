@@ -3,8 +3,8 @@ import javafx.scene.layout.VBox;
 
 public class SinglePlayerController extends Scene {
     private VBox mainPane;
-    private GameBoard userGameBoard;
-    private GameBoard enemyGameBoard;
+    private InitializerGameBoard userInitializerGameBoard;
+    private InitializerGameBoard enemyInitializerGameBoard;
     private SinglePlayerService singlePlayerService;
 
     public SinglePlayerController() {
@@ -18,7 +18,7 @@ public class SinglePlayerController extends Scene {
         singlePlayerService.initializeShipPlacement();
         mainPane.setMinHeight(500);
         mainPane.setMinWidth(500);
-        userGameBoard = new GameBoard("user");
-        mainPane.getChildren().add(userGameBoard);
+        userInitializerGameBoard = new InitializerGameBoard();
+        mainPane.getChildren().add(userInitializerGameBoard);
     }
 }

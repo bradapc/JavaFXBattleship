@@ -10,7 +10,7 @@ public class SinglePlayerService {
     private int[][] shipLocations;
     private Stage initializerStage;
     private Label chooseShipLBL;
-    private GameBoard initializerGameBoard;
+    private InitializerGameBoard initializerGameBoard;
 
     public SinglePlayerService() {
         shipLocations = new int[10][10];
@@ -20,7 +20,7 @@ public class SinglePlayerService {
         Stage initializerStage = new Stage();
         this.initializerStage = initializerStage;
 
-        GameBoard initializerGameBoard = new GameBoard("initializer");
+        InitializerGameBoard initializerGameBoard = new InitializerGameBoard();
         this.initializerGameBoard = initializerGameBoard;
         initializerGameBoard.setSinglePlayerService(this);
 
