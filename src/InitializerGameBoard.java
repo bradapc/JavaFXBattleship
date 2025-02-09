@@ -4,6 +4,7 @@ public class InitializerGameBoard extends GameBoard {
     SinglePlayerService singlePlayerService;
     private int shipsToPlace;
     private GameSquare[][] gameSquares;
+    private String orientation = "HORIZONTAL";
 
     public InitializerGameBoard() {
         shipsToPlace = 5;
@@ -47,30 +48,37 @@ public class InitializerGameBoard extends GameBoard {
     }
 
     public void tryToInitialize(int row, int col) {
-        if(shipsToPlace > 0) {
-            if (isValidInitializerChoice(row, col)) {
-                for (int i = col; i < col + getCurrentShipSize(); i++) {
-                    gameSquares[row][i].setType(types[shipsToPlace - 1]);
-                }
-                shipsToPlace--;
-                singlePlayerService.updateChooseShipLBL();
-                renderColors();
-                if (shipsToPlace == 0) {
-                    finishInitialization();
-                }
+        if (!isValidInitializerChoice(row, col)) {
+            return;
+        }
+        int pos = orientation.equals("HORIZONTAL") ? col : row;
+        for (int i = pos; i < pos + getCurrentShipSize(); i++) {
+            if (orientation.equals("HORIZONTAL")) {
+                gameSquares[row][i].setType(getCurrentShipType());
+            } else {
+                gameSquares[i][col].setType(getCurrentShipType());
             }
+        }
+        shipsToPlace--;
+        singlePlayerService.updateChooseShipLBL();
+        renderColors();
+        if (shipsToPlace == 0) {
+            finishInitialization();
         }
     }
 
     public boolean isValidInitializerChoice(int row, int col) {
-        if (shipsToPlace <= 0) {
-            return false;
+        int pos = 0;
+        if (orientation.equals("HORIZONTAL")) {
+            pos = col;
+        } else {
+            pos = row;
         }
-        for (int i = col; i < col + getCurrentShipSize(); i++) {
+        for (int i = pos; i < pos + getCurrentShipSize(); i++) {
             if (i >= 10) {
                 return false;
             }
-            GameSquare current = gameSquares[row][i];
+            GameSquare current = orientation.equals("HORIZONTAL") ? getGameSquare(row, i) : getGameSquare(i, col);
             if (!current.getType().equals("empty")) {
                 return false;
             }
@@ -95,6 +103,18 @@ public class InitializerGameBoard extends GameBoard {
     @Override
     public GameSquare getGameSquare(int row, int col) {
         return gameSquares[row][col];
+    }
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void flipOrientation() {
+        if (orientation.equals("HORIZONTAL")) {
+            orientation = "VERTICAL";
+        } else {
+            orientation = "HORIZONTAL";
+        }
     }
 
     public void setSinglePlayerService(SinglePlayerService singlePlayerService) {

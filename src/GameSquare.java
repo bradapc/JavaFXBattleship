@@ -1,3 +1,5 @@
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -19,11 +21,15 @@ public class GameSquare extends Rectangle {
         setFill(Color.AQUA);
         setOnMouseEntered(e -> handleMouseEntry());
         setOnMouseExited(e -> handleMouseExit());
-        setOnMouseClicked(e -> handleMouseClick());
+        setOnMouseClicked(this::handleMouseClick);
     }
 
-    public void handleMouseClick() {
-        parentInitializerGameBoard.tryToInitialize(row, col);
+    public void handleMouseClick(MouseEvent e) {
+        if (e.getButton() == MouseButton.PRIMARY) {
+            parentInitializerGameBoard.tryToInitialize(row, col);
+        } else if (e.getButton() == MouseButton.SECONDARY) {
+            parentInitializerGameBoard.flipOrientation();
+        }
     }
 
     public void handleMouseExit() {
@@ -38,19 +44,42 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseEntry() {
+        String orientation = parentInitializerGameBoard.getOrientation();
+        setHoverColor(row, col, orientation);
+    }
+
+    public void setHoverColor(int row, int col, String orientation) {
         for (int i = 0; i < parentInitializerGameBoard.getCurrentShipSize(); i++) {
-            if (col + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
-                if (col + i < 10) {
-                    GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
-                    if (current.getType().equals("empty")) {
-                        current.setFill(Color.YELLOW);
+            if (orientation.equals("HORIZONTAL")) {
+                if (col + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
+                    if (col + i < 10) {
+                        GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
+                        if (current.getType().equals("empty")) {
+                            current.setFill(Color.YELLOW);
+                        }
+                    }
+                } else {
+                    if (col + i < 10) {
+                        GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
+                        if (current.getType().equals("empty")) {
+                            current.setFill(Color.RED);
+                        }
                     }
                 }
-            } else {
-                if (col + i < 10) {
-                    GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
-                    if (current.getType().equals("empty")) {
-                        current.setFill(Color.RED);
+            } else if (orientation.equals("VERTICAL")) {
+                if (row + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
+                    if (row + i < 10) {
+                        GameSquare current = parentInitializerGameBoard.getGameSquare(row + i, col);
+                        if (current.getType().equals("empty")) {
+                            current.setFill(Color.YELLOW);
+                        }
+                    }
+                } else {
+                    if (row + i < 10) {
+                        GameSquare current = parentInitializerGameBoard.getGameSquare(row + i, col);
+                        if (current.getType().equals("empty")) {
+                            current.setFill(Color.RED);
+                        }
                     }
                 }
             }
