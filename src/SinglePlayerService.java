@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
@@ -28,8 +29,11 @@ public class SinglePlayerService {
         this.chooseShipLBL = chooseShipLBL;
         chooseShipLBL.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
 
+        Label chooseOrientationLBL = new Label("Change orientation with Right Mouse Button.");
+        chooseOrientationLBL.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 16));
+
         VBox initializerPane = new VBox();
-        initializerPane.getChildren().addAll(chooseShipLBL, initializerGameBoard);
+        initializerPane.getChildren().addAll(chooseShipLBL, chooseOrientationLBL, initializerGameBoard);
         initializerPane.setAlignment(Pos.CENTER);
 
         Scene initializerScene = new Scene(initializerPane);
