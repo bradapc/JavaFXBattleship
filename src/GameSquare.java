@@ -19,10 +19,10 @@ public class GameSquare extends Rectangle {
         setFill(Color.AQUA);
         setOnMouseEntered(e -> handleMouseEntry(parentGameBoard.getType()));
         setOnMouseExited(e -> handleMouseExit(parentGameBoard.getType()));
-        setOnMouseClicked(e -> handleMouseClick(parentGameBoard.getType()));
+        setOnMouseClicked(e -> handleMouseClick());
     }
 
-    public void handleMouseClick(String type) {
+    public void handleMouseClick() {
         parentGameBoard.tryToInitialize(row, col);
     }
 
@@ -42,20 +42,20 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseEntry(String type) {
-        if (type.equals("user") || type.equals("enemy")) {
-            setFill(Color.AQUAMARINE);
+        if (type.equals("destroyer")) {
+            return;
         } else {
-            for (int i = 0; i <= parentGameBoard.getShipsToPlace(); i++) {
-                if (row + parentGameBoard.getShipsToPlace() < 10) {
-                    if (row + i < 10) {
-                        GameSquare current = parentGameBoard.getGameSquare(row + i, col);
+            for (int i = 0; i < parentGameBoard.getCurrentShipSize(); i++) {
+                if (col + parentGameBoard.getCurrentShipSize() - 1 < 10) {
+                    if (col + i < 10) {
+                        GameSquare current = parentGameBoard.getGameSquare(row, col + i);
                         if (current.getType().equals("empty")) {
                             current.setFill(Color.YELLOW);
                         }
                     }
                 } else {
-                    if (row + i < 10) {
-                        GameSquare current = parentGameBoard.getGameSquare(row + i, col);
+                    if (col + i < 10) {
+                        GameSquare current = parentGameBoard.getGameSquare(row, col + i);
                         if (current.getType().equals("empty")) {
                             current.setFill(Color.RED);
                         }
@@ -65,10 +65,12 @@ public class GameSquare extends Rectangle {
         }
     }
 
-    public void updateColor() {
-        if (!type.equals("empty")) {
-            setFill(Color.BLACK);
+    public Color getColorFromType() {
+        if (type.equals("destroyer") || type.equals("submarine") ||
+        type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
+            return Color.BLACK;
         }
+        return Color.AQUA;
     }
 
     public void setType(String type) {
