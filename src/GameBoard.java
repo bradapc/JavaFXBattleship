@@ -1,9 +1,8 @@
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class GameBoard extends GridPane {
+    SinglePlayerService singlePlayerService;
     private String type;
     private int shipsToPlace = 0;
     private GameSquare[][] gameSquares;
@@ -15,12 +14,14 @@ public class GameBoard extends GridPane {
             "destroyer"
     };
     public static final int[] sizes = {2, 3, 3, 4, 5};
+    private int[][] shipPlacements;
 
     public GameBoard(String type) {
         this.type = type;
         if (type.equals("initializer")) {
             shipsToPlace = 5;
         }
+        shipPlacements = new int[10][10];
         gameSquares = new GameSquare[10][10];
         setAlignment(Pos.CENTER);
         for (int i = 0; i < 10; i++) {
@@ -39,6 +40,25 @@ public class GameBoard extends GridPane {
         }
     }
 
+    public int indexOfType(String s) {
+        for (int i = 0; i < types.length; i++) {
+            if (s.equals(types[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void finishInitialization() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                GameSquare current = gameSquares[i][j];
+                shipPlacements[i][j] = indexOfType(current.getType()) + 1;
+            }
+        }
+        singlePlayerService.startGame(shipPlacements);
+    }
+
     public void tryToInitialize(int row, int col) {
         if(shipsToPlace > 0) {
             if (isValidInitializerChoice(row, col)) {
@@ -47,6 +67,9 @@ public class GameBoard extends GridPane {
                 }
                 shipsToPlace--;
                 renderColors();
+                if (shipsToPlace == 0) {
+                    finishInitialization();
+                }
             }
         }
     }
@@ -82,11 +105,7 @@ public class GameBoard extends GridPane {
         return type;
     }
 
-    public int getShipsToPlace() {
-        return shipsToPlace;
-    }
-
-    void setShipsToPlace(int shipsToPlace) {
-        this.shipsToPlace = shipsToPlace;
+    public void setSinglePlayerService(SinglePlayerService singlePlayerService) {
+        this.singlePlayerService = singlePlayerService;
     }
 }
