@@ -66,6 +66,7 @@ public class GameBoard extends GridPane {
                     gameSquares[row][i].setType(types[shipsToPlace - 1]);
                 }
                 shipsToPlace--;
+                singlePlayerService.updateChooseShipLBL();
                 renderColors();
                 if (shipsToPlace == 0) {
                     finishInitialization();
@@ -88,6 +89,13 @@ public class GameBoard extends GridPane {
             }
         }
         return true;
+    }
+
+    public String getCurrentShipType() {
+        if (shipsToPlace == 0) {
+            return "";
+        }
+        return types[shipsToPlace - 1];
     }
 
     public int getCurrentShipSize() {
