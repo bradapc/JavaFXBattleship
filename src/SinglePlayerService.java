@@ -39,6 +39,7 @@ public class SinglePlayerService {
         Scene initializerScene = new Scene(initializerPane);
         initializerStage.setScene(initializerScene);
         initializerStage.setTitle("Choose Ship Placements");
+        initializerStage.setResizable(false);
         initializerStage.show();
     }
 

@@ -29,6 +29,9 @@ public class GameSquare extends Rectangle {
             parentInitializerGameBoard.tryToInitialize(row, col);
         } else if (e.getButton() == MouseButton.SECONDARY) {
             parentInitializerGameBoard.flipOrientation();
+            //Redraw old orientation colors
+            handleMouseExit();
+            setHoverColor(row, col, parentInitializerGameBoard.getOrientation());
         }
     }
 
@@ -44,8 +47,7 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseEntry() {
-        String orientation = parentInitializerGameBoard.getOrientation();
-        setHoverColor(row, col, orientation);
+        setHoverColor(row, col, parentInitializerGameBoard.getOrientation());
     }
 
     public void setHoverColor(int row, int col, String orientation) {
