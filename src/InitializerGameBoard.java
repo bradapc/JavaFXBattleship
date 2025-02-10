@@ -3,18 +3,18 @@ import javafx.geometry.Pos;
 public class InitializerGameBoard extends GameBoard {
     InitializerService initializerService;
     private int shipsToPlace;
-    private GameSquare[][] gameSquares;
+    private InitializerGameSquare[][] initializerGameSquares;
     private String orientation = "HORIZONTAL";
 
     public InitializerGameBoard() {
         shipsToPlace = 5;
         shipPlacements = new int[10][10];
-        gameSquares = new GameSquare[10][10];
+        initializerGameSquares = new InitializerGameSquare[10][10];
         setAlignment(Pos.CENTER);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                gameSquares[i][j] = new GameSquare(this, GameSquare.WIDTH, GameSquare.HEIGHT, i, j);
-                add(gameSquares[i][j], j, i);
+                initializerGameSquares[i][j] = new InitializerGameSquare(this, InitializerGameSquare.WIDTH, InitializerGameSquare.HEIGHT, i, j);
+                add(initializerGameSquares[i][j], j, i);
             }
         }
     }
@@ -23,7 +23,7 @@ public class InitializerGameBoard extends GameBoard {
     public void renderColors() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                gameSquares[i][j].setFill(gameSquares[i][j].getColorFromType());
+                initializerGameSquares[i][j].setFill(initializerGameSquares[i][j].getColorFromType());
             }
         }
     }
@@ -40,7 +40,7 @@ public class InitializerGameBoard extends GameBoard {
     public void finishInitialization() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                GameSquare current = gameSquares[i][j];
+                InitializerGameSquare current = initializerGameSquares[i][j];
                 shipPlacements[i][j] = indexOfType(current.getType()) + 1;
             }
         }
@@ -54,9 +54,9 @@ public class InitializerGameBoard extends GameBoard {
         int pos = orientation.equals("HORIZONTAL") ? col : row;
         for (int i = pos; i < pos + getCurrentShipSize(); i++) {
             if (orientation.equals("HORIZONTAL")) {
-                gameSquares[row][i].setType(getCurrentShipType());
+                initializerGameSquares[row][i].setType(getCurrentShipType());
             } else {
-                gameSquares[i][col].setType(getCurrentShipType());
+                initializerGameSquares[i][col].setType(getCurrentShipType());
             }
         }
         shipsToPlace--;
@@ -78,7 +78,7 @@ public class InitializerGameBoard extends GameBoard {
             if (i >= 10) {
                 return false;
             }
-            GameSquare current = orientation.equals("HORIZONTAL") ? getGameSquare(row, i) : getGameSquare(i, col);
+            InitializerGameSquare current = orientation.equals("HORIZONTAL") ? getGameSquare(row, i) : getGameSquare(i, col);
             if (!current.getType().equals("empty")) {
                 return false;
             }
@@ -100,9 +100,8 @@ public class InitializerGameBoard extends GameBoard {
         return sizes[shipsToPlace - 1];
     }
 
-    @Override
-    public GameSquare getGameSquare(int row, int col) {
-        return gameSquares[row][col];
+    public InitializerGameSquare getGameSquare(int row, int col) {
+        return initializerGameSquares[row][col];
     }
 
     public String getOrientation() {

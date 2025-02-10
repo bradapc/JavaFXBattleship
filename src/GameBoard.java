@@ -1,7 +1,7 @@
 import javafx.scene.layout.GridPane;
 
 abstract public class GameBoard extends GridPane {
-    private GameSquare[][] gameSquares;
+    private InitializerGameSquare[][] initializerGameSquares;
     public static final String[] types = {
             "carrier",
             "battleship",
@@ -14,5 +14,7 @@ abstract public class GameBoard extends GridPane {
 
     public abstract void renderColors();
 
-    public abstract GameSquare getGameSquare(int row, int col);
+    public static String getTypeFromBoardNumber(int i) {
+        return types[i - 1];
+    }
 }

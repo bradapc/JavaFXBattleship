@@ -6,17 +6,17 @@ import javafx.scene.shape.Rectangle;
 public class GameSquare extends Rectangle {
     private int row;
     private int col;
-    private InitializerGameBoard parentInitializerGameBoard;
+    private SinglePlayerGameboard singlePlayerGameboard;
     private String type;
     public static final int HEIGHT = 30;
     public static final int WIDTH = 30;
 
-    public GameSquare(InitializerGameBoard parentInitializerGameBoard, int width, int height, int row, int col) {
+    public GameSquare(SinglePlayerGameboard singlePlayerGameboard, int width, int height, int row, int col) {
         super(width, height);
         type = "empty";
         this.row = row;
         this.col = col;
-        this.parentInitializerGameBoard = parentInitializerGameBoard;
+        this.singlePlayerGameboard = singlePlayerGameboard;
         setStroke(Color.BLACK);
         setFill(Color.AQUA);
         setOnMouseEntered(e -> handleMouseEntry());
@@ -25,72 +25,24 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseClick(MouseEvent e) {
-        if (e.getButton() == MouseButton.PRIMARY) {
-            parentInitializerGameBoard.tryToInitialize(row, col);
-        } else if (e.getButton() == MouseButton.SECONDARY) {
-            parentInitializerGameBoard.flipOrientation();
-            //Redraw old orientation colors
-            handleMouseExit();
-            setHoverColor(row, col, parentInitializerGameBoard.getOrientation());
-        }
+        //add mouse click event
     }
 
     public void handleMouseExit() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                GameSquare current = parentInitializerGameBoard.getGameSquare(i, j);
-                if (current.getType().equals("empty")) {
-                    current.setFill(Color.AQUA);
-                }
-            }
-        }
+        //handle mouse exit
     }
 
     public void handleMouseEntry() {
-        setHoverColor(row, col, parentInitializerGameBoard.getOrientation());
+        //handle entry
     }
 
     public void setHoverColor(int row, int col, String orientation) {
-        for (int i = 0; i < parentInitializerGameBoard.getCurrentShipSize(); i++) {
-            if (orientation.equals("HORIZONTAL")) {
-                if (col + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
-                    if (col + i < 10) {
-                        GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.YELLOW);
-                        }
-                    }
-                } else {
-                    if (col + i < 10) {
-                        GameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.RED);
-                        }
-                    }
-                }
-            } else if (orientation.equals("VERTICAL")) {
-                if (row + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
-                    if (row + i < 10) {
-                        GameSquare current = parentInitializerGameBoard.getGameSquare(row + i, col);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.YELLOW);
-                        }
-                    }
-                } else {
-                    if (row + i < 10) {
-                        GameSquare current = parentInitializerGameBoard.getGameSquare(row + i, col);
-                        if (current.getType().equals("empty")) {
-                            current.setFill(Color.RED);
-                        }
-                    }
-                }
-            }
-        }
+        //handle color
     }
 
     public Color getColorFromType() {
         if (type.equals("destroyer") || type.equals("submarine") ||
-        type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
+                type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
             return Color.BLACK;
         }
         return Color.AQUA;

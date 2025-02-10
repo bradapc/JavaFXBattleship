@@ -2,10 +2,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
 public class SinglePlayerController extends Scene {
-    private VBox mainPane;
-    private InitializerGameBoard userInitializerGameBoard;
-    private InitializerGameBoard enemyInitializerGameBoard;
     private InitializerService initializerService;
+    private VBox mainPane;
 
     public SinglePlayerController() {
         this(new VBox());
@@ -21,6 +19,9 @@ public class SinglePlayerController extends Scene {
     }
 
     public void startGame(int[][] shipPlacements) {
+        SinglePlayerService singlePlayerService = new SinglePlayerService(shipPlacements, this);
+        SinglePlayerGameboard singlePlayerGameboard = new SinglePlayerGameboard(shipPlacements);
+        mainPane.getChildren().add(singlePlayerGameboard);
 
     }
 }
