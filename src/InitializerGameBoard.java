@@ -1,7 +1,7 @@
 import javafx.geometry.Pos;
 
 public class InitializerGameBoard extends GameBoard {
-    SinglePlayerService singlePlayerService;
+    InitializerService initializerService;
     private int shipsToPlace;
     private GameSquare[][] gameSquares;
     private String orientation = "HORIZONTAL";
@@ -44,7 +44,7 @@ public class InitializerGameBoard extends GameBoard {
                 shipPlacements[i][j] = indexOfType(current.getType()) + 1;
             }
         }
-        singlePlayerService.startGame(shipPlacements);
+        initializerService.startGame(shipPlacements);
     }
 
     public void tryToInitialize(int row, int col) {
@@ -60,7 +60,7 @@ public class InitializerGameBoard extends GameBoard {
             }
         }
         shipsToPlace--;
-        singlePlayerService.updateChooseShipLBL();
+        initializerService.updateChooseShipLBL();
         renderColors();
         if (shipsToPlace == 0) {
             finishInitialization();
@@ -117,7 +117,7 @@ public class InitializerGameBoard extends GameBoard {
         }
     }
 
-    public void setSinglePlayerService(SinglePlayerService singlePlayerService) {
-        this.singlePlayerService = singlePlayerService;
+    public void setSinglePlayerService(InitializerService initializerService) {
+        this.initializerService = initializerService;
     }
 }
