@@ -26,7 +26,11 @@ public class GameSquare extends Rectangle {
 
     public void handleMouseClick(MouseEvent e) {
         if (parentGameboard.getBoardType().equals("ENEMY")) {
-            setFill(Color.RED);
+            if (type.equals("empty")) {
+                setFill(Color.BLUE);
+            } else {
+                setFill(Color.RED);
+            }
             hit = true;
         }
     }
@@ -46,6 +50,9 @@ public class GameSquare extends Rectangle {
     public Color getColorFromType() {
         if (type.equals("destroyer") || type.equals("submarine") ||
                 type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
+            if (parentGameboard.getBoardType().equals("USER")) {
+                return new Color(0,0,0, 0.5);
+            }
             return Color.BLACK;
         }
         return Color.AQUA;
