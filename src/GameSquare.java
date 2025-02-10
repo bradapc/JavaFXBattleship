@@ -25,23 +25,22 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseClick(MouseEvent e) {
-        //add mouse click event
+        if (parentGameboard.getBoardType().equals("ENEMY")) {
+            setFill(Color.RED);
+            hit = true;
+        }
     }
 
     public void handleMouseExit() {
-        if (parentGameboard.getBoardType().equals("ENEMY")) {
+        if (parentGameboard.getBoardType().equals("ENEMY") && !hit) {
             setFill(Color.AQUA);
         }
     }
 
     public void handleMouseEntry() {
-        if (parentGameboard.getBoardType().equals("ENEMY")) {
+        if (parentGameboard.getBoardType().equals("ENEMY") && !hit) {
             setFill(Color.YELLOW);
         }
-    }
-
-    public void setHoverColor(int row, int col, String orientation) {
-        //handle color
     }
 
     public Color getColorFromType() {
