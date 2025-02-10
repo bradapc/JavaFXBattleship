@@ -1,4 +1,3 @@
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -6,17 +5,18 @@ import javafx.scene.shape.Rectangle;
 public class GameSquare extends Rectangle {
     private int row;
     private int col;
-    private SinglePlayerGameboard singlePlayerGameboard;
+    private SinglePlayerGameboard parentGameboard;
     private String type;
     public static final int HEIGHT = 30;
     public static final int WIDTH = 30;
+    boolean hit;
 
-    public GameSquare(SinglePlayerGameboard singlePlayerGameboard, int width, int height, int row, int col) {
+    public GameSquare(SinglePlayerGameboard parentGameboard, int width, int height, int row, int col) {
         super(width, height);
         type = "empty";
         this.row = row;
         this.col = col;
-        this.singlePlayerGameboard = singlePlayerGameboard;
+        this.parentGameboard = parentGameboard;
         setStroke(Color.BLACK);
         setFill(Color.AQUA);
         setOnMouseEntered(e -> handleMouseEntry());
@@ -29,11 +29,15 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseExit() {
-        //handle mouse exit
+        if (parentGameboard.getBoardType().equals("ENEMY")) {
+            setFill(Color.AQUA);
+        }
     }
 
     public void handleMouseEntry() {
-        //handle entry
+        if (parentGameboard.getBoardType().equals("ENEMY")) {
+            setFill(Color.YELLOW);
+        }
     }
 
     public void setHoverColor(int row, int col, String orientation) {
@@ -46,6 +50,10 @@ public class GameSquare extends Rectangle {
             return Color.BLACK;
         }
         return Color.AQUA;
+    }
+
+    public boolean isHit() {
+        return hit;
     }
 
     public void setType(String type) {

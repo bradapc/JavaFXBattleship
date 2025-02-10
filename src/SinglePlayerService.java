@@ -7,4 +7,9 @@ public class SinglePlayerService {
         this.singlePlayerController = singlePlayerController;
 
     }
+
+    public int[][] generateShipPlacements() {
+        //TO ADD ENEMY GENERATION
+        return new int[10][10];
+    }
 }

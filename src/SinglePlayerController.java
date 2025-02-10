@@ -12,16 +12,17 @@ public class SinglePlayerController extends Scene {
     public SinglePlayerController(VBox mainPane) {
         super(mainPane);
         this.mainPane = mainPane;
+        mainPane.setSpacing(30);
+        mainPane.setMinHeight(700);
+        mainPane.setMinWidth(500);
         initializerService = new InitializerService(this);
         initializerService.initializeShipPlacement();
-        mainPane.setMinHeight(500);
-        mainPane.setMinWidth(500);
     }
 
     public void startGame(int[][] shipPlacements) {
         SinglePlayerService singlePlayerService = new SinglePlayerService(shipPlacements, this);
-        SinglePlayerGameboard singlePlayerGameboard = new SinglePlayerGameboard(shipPlacements);
-        mainPane.getChildren().add(singlePlayerGameboard);
-
+        SinglePlayerGameboard userGameBoard = new SinglePlayerGameboard(shipPlacements, "USER");
+        SinglePlayerGameboard enemyGameBoard = new SinglePlayerGameboard(singlePlayerService.generateShipPlacements(), "ENEMY");
+        mainPane.getChildren().addAll(enemyGameBoard, userGameBoard);
     }
 }

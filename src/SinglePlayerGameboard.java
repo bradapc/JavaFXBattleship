@@ -3,9 +3,11 @@ import javafx.geometry.Pos;
 public class SinglePlayerGameboard extends GameBoard {
     private GameSquare[][] gameSquares;
     private int[][] shipPlacements;
+    private final String boardType;
 
-    public SinglePlayerGameboard(int[][] shipPlacements) {
+    public SinglePlayerGameboard(int[][] shipPlacements, String boardType) {
         this.shipPlacements = shipPlacements;
+        this.boardType = boardType;
         gameSquares = new GameSquare[10][10];
         setAlignment(Pos.CENTER);
         for (int i = 0; i < 10; i++) {
@@ -24,11 +26,26 @@ public class SinglePlayerGameboard extends GameBoard {
         return gameSquares[row][col];
     }
 
+    public String getBoardType() {
+        return boardType;
+    }
+
     @Override
     public void renderColors() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                gameSquares[i][j].setFill(gameSquares[i][j].getColorFromType());
+        if (boardType.equals("USER")) {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    GameSquare current = gameSquares[i][j];
+                    current.setFill(gameSquares[i][j].getColorFromType());
+                }
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    GameSquare current = gameSquares[i][j];
+                    if (!current.isHit()) return;
+                    current.setFill(gameSquares[i][j].getColorFromType());
+                }
             }
         }
     }
