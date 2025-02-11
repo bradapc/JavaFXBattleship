@@ -27,6 +27,7 @@ public class GameSquare extends Rectangle {
     public void handleMouseClick(MouseEvent e) {
         if (!parentGameboard.getSinglePlayerService().isValidPlayerHit(this)) return;
         if (parentGameboard.getBoardType().equals("ENEMY")) {
+            parentGameboard.getSinglePlayerService().swapTurn();
             if (type.equals("empty")) {
                 setFill(Color.BLUE);
             } else {

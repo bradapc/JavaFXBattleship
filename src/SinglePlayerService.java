@@ -11,6 +11,14 @@ public class SinglePlayerService {
         turn = "USER";
     }
 
+    public void swapTurn() {
+        if (turn.equals("USER")) {
+            turn = "ENEMY";
+        } else {
+            turn = "USER";
+        }
+    }
+
     public boolean isValidPlayerHit(GameSquare gameSquare) {
         if (turn.equals("USER")) {
             if (gameSquare.getParentGameboard().equals(enemyGameBoard) && !gameSquare.isHit()) {
