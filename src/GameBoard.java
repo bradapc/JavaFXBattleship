@@ -17,4 +17,11 @@ abstract public class GameBoard extends GridPane {
     public static String getTypeFromBoardNumber(int i) {
         return types[i - 1];
     }
+
+    public static int getCurrentShipSize(int shipsToPlace) {
+        if (shipsToPlace == 0) {
+            return 0;
+        }
+        return sizes[shipsToPlace - 1];
+    }
 }

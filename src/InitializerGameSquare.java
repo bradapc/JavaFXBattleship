@@ -51,9 +51,9 @@ public class InitializerGameSquare extends Rectangle {
     }
 
     public void setHoverColor(int row, int col, String orientation) {
-        for (int i = 0; i < parentInitializerGameBoard.getCurrentShipSize(); i++) {
+        for (int i = 0; i < GameBoard.getCurrentShipSize(parentInitializerGameBoard.getShipsToPlace()); i++) {
             if (orientation.equals("HORIZONTAL")) {
-                if (col + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
+                if (col + GameBoard.getCurrentShipSize(parentInitializerGameBoard.getShipsToPlace()) - 1 < 10) {
                     if (col + i < 10) {
                         InitializerGameSquare current = parentInitializerGameBoard.getGameSquare(row, col + i);
                         if (current.getType().equals("empty")) {
@@ -69,7 +69,7 @@ public class InitializerGameSquare extends Rectangle {
                     }
                 }
             } else if (orientation.equals("VERTICAL")) {
-                if (row + parentInitializerGameBoard.getCurrentShipSize() - 1 < 10) {
+                if (row + GameBoard.getCurrentShipSize(parentInitializerGameBoard.getShipsToPlace()) - 1 < 10) {
                     if (row + i < 10) {
                         InitializerGameSquare current = parentInitializerGameBoard.getGameSquare(row + i, col);
                         if (current.getType().equals("empty")) {

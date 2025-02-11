@@ -52,7 +52,7 @@ public class InitializerGameBoard extends GameBoard {
             return;
         }
         int pos = orientation.equals("HORIZONTAL") ? col : row;
-        for (int i = pos; i < pos + getCurrentShipSize(); i++) {
+        for (int i = pos; i < pos + GameBoard.getCurrentShipSize(shipsToPlace); i++) {
             if (orientation.equals("HORIZONTAL")) {
                 initializerGameSquares[row][i].setType(getCurrentShipType());
             } else {
@@ -74,7 +74,7 @@ public class InitializerGameBoard extends GameBoard {
         } else {
             pos = row;
         }
-        for (int i = pos; i < pos + getCurrentShipSize(); i++) {
+        for (int i = pos; i < pos + GameBoard.getCurrentShipSize(shipsToPlace); i++) {
             if (i >= 10) {
                 return false;
             }
@@ -91,13 +91,6 @@ public class InitializerGameBoard extends GameBoard {
             return "";
         }
         return types[shipsToPlace - 1];
-    }
-
-    public int getCurrentShipSize() {
-        if (shipsToPlace == 0) {
-            return 0;
-        }
-        return sizes[shipsToPlace - 1];
     }
 
     public InitializerGameSquare getGameSquare(int row, int col) {
@@ -118,5 +111,9 @@ public class InitializerGameBoard extends GameBoard {
 
     public void setSinglePlayerService(InitializerService initializerService) {
         this.initializerService = initializerService;
+    }
+
+    public int getShipsToPlace() {
+        return shipsToPlace;
     }
 }

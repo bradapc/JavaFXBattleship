@@ -43,6 +43,49 @@ public class InitializerService {
         initializerStage.show();
     }
 
+    public int[][] getEnemyBoard() {
+        int shipsToPlace = 5;
+        int[][] enemyGameBoard = new int[10][10];
+        while (shipsToPlace > 0) {
+            int posRow = (int)(Math.random() * 10);
+            int posCol = (int)(Math.random() * 10);
+            int currentSize = GameBoard.getCurrentShipSize(shipsToPlace);
+            String orientation = (int)(Math.random() * 2) == 0 ? "HORIZONTAL" : "VERTICAL";
+            if (orientation.equals("HORIZONTAL")) {
+                if (!(posCol + currentSize > 9)) {
+                    boolean validPlacement = true;
+                    for (int i = posCol; i < posCol + currentSize; i++) {
+                        if (enemyGameBoard[posRow][i] > 0) {
+                            validPlacement = false;
+                        }
+                    }
+                    if (validPlacement) {
+                        for (int i = posCol; i < posCol + currentSize; i++) {
+                            enemyGameBoard[posRow][i] = currentSize;
+                        }
+                        shipsToPlace--;
+                    }
+                }
+            } else {
+                if (!(posRow + currentSize > 9)) {
+                    boolean validPlacement = true;
+                    for (int i = posRow; i < posRow + currentSize; i++) {
+                        if (enemyGameBoard[i][posCol] > 0) {
+                            validPlacement = false;
+                        }
+                    }
+                    if (validPlacement) {
+                        for (int i = posRow; i < posRow + currentSize; i++) {
+                            enemyGameBoard[i][posCol] = currentSize;
+                        }
+                        shipsToPlace--;
+                    }
+                }
+            }
+        }
+        return enemyGameBoard;
+    }
+
     public void updateChooseShipLBL() {
         chooseShipLBL.setText("Place your " + initializerGameBoard.getCurrentShipType());
     }
