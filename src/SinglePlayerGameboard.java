@@ -7,6 +7,7 @@ public class SinglePlayerGameboard extends GameBoard {
     private int[][] shipPlacements;
     private final String boardType;
     private ArrayList<GameSquare> shipSquares;
+    private SinglePlayerService singlePlayerService;
 
     public SinglePlayerGameboard(int[][] shipPlacements, String boardType) {
         this.shipPlacements = shipPlacements;
@@ -25,6 +26,14 @@ public class SinglePlayerGameboard extends GameBoard {
             }
         }
         renderColors();
+    }
+
+    public void setSinglePlayerService(SinglePlayerService singlePlayerService) {
+        this.singlePlayerService = singlePlayerService;
+    }
+
+    public SinglePlayerService getSinglePlayerService() {
+        return singlePlayerService;
     }
 
     public boolean isBoardDead() {

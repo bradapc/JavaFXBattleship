@@ -23,6 +23,8 @@ public class SinglePlayerController extends Scene {
         SinglePlayerService singlePlayerService = new SinglePlayerService(shipPlacements, this);
         SinglePlayerGameboard userGameBoard = new SinglePlayerGameboard(shipPlacements, "USER");
         SinglePlayerGameboard enemyGameBoard = new SinglePlayerGameboard(initializerService.getEnemyBoard(), "ENEMY");
+        singlePlayerService.setEnemyGameBoard(enemyGameBoard);
+        singlePlayerService.setUserGameBoard(userGameBoard);
         mainPane.getChildren().addAll(enemyGameBoard, userGameBoard);
     }
 }

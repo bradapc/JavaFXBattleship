@@ -25,6 +25,7 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseClick(MouseEvent e) {
+        if (!parentGameboard.getSinglePlayerService().isValidPlayerHit(this)) return;
         if (parentGameboard.getBoardType().equals("ENEMY")) {
             if (type.equals("empty")) {
                 setFill(Color.BLUE);
@@ -69,5 +70,9 @@ public class GameSquare extends Rectangle {
 
     public String getType() {
         return type;
+    }
+
+    public SinglePlayerGameboard getParentGameboard() {
+        return parentGameboard;
     }
 }
