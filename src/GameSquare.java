@@ -50,6 +50,7 @@ public class GameSquare extends Rectangle {
     public Color getColorFromType() {
         if (type.equals("destroyer") || type.equals("submarine") ||
                 type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
+            if (hit) return Color.RED;
             if (parentGameboard.getBoardType().equals("USER")) {
                 return new Color(0,0,0, 0.5);
             }
