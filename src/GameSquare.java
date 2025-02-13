@@ -9,7 +9,7 @@ public class GameSquare extends Rectangle {
     private String type;
     public static final int HEIGHT = 30;
     public static final int WIDTH = 30;
-    boolean hit;
+    private boolean hit;
 
     public GameSquare(SinglePlayerGameboard parentGameboard, int width, int height, int row, int col) {
         super(width, height);
@@ -25,16 +25,7 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseClick(MouseEvent e) {
-        if (!parentGameboard.getSinglePlayerService().isValidPlayerHit(this)) return;
-        if (parentGameboard.getBoardType().equals("ENEMY")) {
-            parentGameboard.getSinglePlayerService().swapTurn();
-            if (type.equals("empty")) {
-                setFill(Color.BLUE);
-            } else {
-                setFill(Color.RED);
-            }
-            hit = true;
-        }
+        parentGameboard.getSinglePlayerService().playerHitRequest(this);
     }
 
     public void handleMouseExit() {
@@ -63,6 +54,10 @@ public class GameSquare extends Rectangle {
 
     public boolean isHit() {
         return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
     }
 
     public void setType(String type) {

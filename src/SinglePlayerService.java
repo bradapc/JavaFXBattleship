@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 public class SinglePlayerService {
     private int[][] shipPlacements;
     private SinglePlayerController singlePlayerController;
@@ -16,6 +18,19 @@ public class SinglePlayerService {
             turn = "ENEMY";
         } else {
             turn = "USER";
+        }
+    }
+
+    public void playerHitRequest(GameSquare gameSquare) {
+        if (!isValidPlayerHit(gameSquare)) return;
+        if (gameSquare.getParentGameboard().getBoardType().equals("ENEMY")) {
+            swapTurn();
+            if (gameSquare.getType().equals("empty")) {
+                gameSquare.setFill(Color.BLUE);
+            } else {
+                gameSquare.setFill(Color.RED);
+            }
+            gameSquare.setHit(true);
         }
     }
 
