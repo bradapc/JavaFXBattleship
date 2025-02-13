@@ -32,6 +32,31 @@ public class SinglePlayerService {
             }
             gameSquare.setHit(true);
         }
+        enemyHitRequest();
+    }
+
+    public char[][] populateGuessesBoard() {
+        char[][] guesses = new char[10][10];
+        for (int i = 0; i < guesses.length; i++) {
+            for (int j = 0; j < guesses[i].length; j++) {
+                GameSquare current = userGameBoard.getGameSquare(i, j);
+                if (!current.isHit()) {
+                    guesses[i][j] = '.';
+                } else {
+                    if (current.getType().equals("empty")) {
+                        guesses[i][j] = '0';
+                    }
+                    //else if not empty, get type and check if that type is dead
+                    //If not dead, render as X. If dead, render as appropriate number.
+                }
+            }
+        }
+        return guesses;
+    }
+
+    public void enemyHitRequest() {
+        char[][] guesses = populateGuessesBoard();
+        //int[] guess = AIGuess.makeGuess();
     }
 
     public boolean isValidPlayerHit(GameSquare gameSquare) {
