@@ -2,6 +2,7 @@ import javafx.animation.PauseTransition;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class SinglePlayerService {
@@ -10,6 +11,7 @@ public class SinglePlayerService {
     private String turn;
     private SinglePlayerGameboard enemyGameBoard;
     private SinglePlayerGameboard userGameBoard;
+    private boolean isGameOver;
 
     public SinglePlayerService(int[][] shipPlacements, SinglePlayerController singlePlayerController) {
         this.shipPlacements = shipPlacements;
@@ -47,6 +49,7 @@ public class SinglePlayerService {
             }
         }
         if (enemyGameBoard.isBoardDead()) {
+            isGameOver = true;
             singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You have won!", true));
             turn = "";
             return;
@@ -112,11 +115,28 @@ public class SinglePlayerService {
             }
         }
         if (userGameBoard.isBoardDead()) {
+            isGameOver = true;
             singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has won!", true));
+            updateHiddenEnemyShipColors();
             turn = "";
             return;
         }
         swapTurn();
+    }
+
+    public void updateHiddenEnemyShipColors() {
+        ArrayList<String> aliveTypes = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                GameSquare current = enemyGameBoard.getGameSquare(i, j);
+                if (!isDead(current.getType(), enemyGameBoard) && !aliveTypes.contains(current.getType())) {
+                    aliveTypes.add(current.getType());
+                }
+                if (!current.getType().equals("empty") && aliveTypes.contains(current.getType())) {
+                    current.setFill(Color.ORANGE);
+                }
+            }
+        }
     }
 
     public void updateColorToDead(String type, SinglePlayerGameboard board) {
@@ -151,6 +171,10 @@ public class SinglePlayerService {
     public void setUserGameBoard(SinglePlayerGameboard userGameBoard) {
         this.userGameBoard = userGameBoard;
         userGameBoard.setSinglePlayerService(this);
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
     }
 
 }

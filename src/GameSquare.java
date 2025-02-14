@@ -29,13 +29,13 @@ public class GameSquare extends Rectangle {
     }
 
     public void handleMouseExit() {
-        if (parentGameboard.getBoardType().equals("ENEMY") && !hit) {
+        if (parentGameboard.getBoardType().equals("ENEMY") && !hit && !parentGameboard.getSinglePlayerService().isGameOver()) {
             setFill(Color.AQUA);
         }
     }
 
     public void handleMouseEntry() {
-        if (parentGameboard.getBoardType().equals("ENEMY") && !hit) {
+        if (parentGameboard.getBoardType().equals("ENEMY") && !hit && !parentGameboard.getSinglePlayerService().isGameOver()) {
             setFill(Color.YELLOW);
         }
     }
