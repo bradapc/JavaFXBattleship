@@ -14,6 +14,10 @@ abstract public class GameBoard extends GridPane {
 
     public abstract void renderColors();
 
+    public static int getIndexOfType(String type) {
+
+    }
+
     public static String getTypeFromBoardNumber(int i) {
         return types[i - 1];
     }

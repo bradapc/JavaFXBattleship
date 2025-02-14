@@ -35,7 +35,7 @@ public class SinglePlayerService {
         enemyHitRequest();
     }
 
-    public char[][] populateGuessesBoard() {
+    private char[][] populateGuessesBoard() {
         char[][] guesses = new char[10][10];
         for (int i = 0; i < guesses.length; i++) {
             for (int j = 0; j < guesses[i].length; j++) {
@@ -43,8 +43,14 @@ public class SinglePlayerService {
                 if (!current.isHit()) {
                     guesses[i][j] = '.';
                 } else {
-                    if (current.getType().equals("empty")) {
+                    String currentType = current.getType();
+                    if (currentType.equals("empty")) {
                         guesses[i][j] = '0';
+                    } else {
+                        boolean isCurrentTypeDead = isDead(currentType);
+                        if (isCurrentTypeDead) {
+                            guesses[i][j] = GameBoard.types
+                        }
                     }
                     //else if not empty, get type and check if that type is dead
                     //If not dead, render as X. If dead, render as appropriate number.
@@ -52,6 +58,18 @@ public class SinglePlayerService {
             }
         }
         return guesses;
+    }
+
+    public boolean isDead(String currentType) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                GameSquare current = userGameBoard.getGameSquare(i, j);
+                if (current.getType().equals(currentType) && !current.isHit()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void enemyHitRequest() {
