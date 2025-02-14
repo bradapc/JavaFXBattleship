@@ -1,4 +1,8 @@
+import javafx.animation.PauseTransition;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+import java.util.concurrent.TimeUnit;
 
 public class SinglePlayerService {
     private int[][] shipPlacements;
@@ -27,22 +31,22 @@ public class SinglePlayerService {
             swapTurn();
             gameSquare.setHit(true);
             if (gameSquare.getType().equals("empty")) {
-                singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
+                singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
                         gameSquare.getCoordString() + " and miss."));
                 gameSquare.setFill(Color.BLUE);
             } else {
                 if (isDead(gameSquare.getType(), enemyGameBoard)) {
-                    singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You destroyed the" +
-                            "enemy " + gameSquare.getType() + "!"));
+                    singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You destroyed the" +
+                            " enemy " + gameSquare.getType() + "!"));
                     updateColorToDead(gameSquare.getType(), enemyGameBoard);
                 } else {
-                    singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
+                    singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
                             gameSquare.getCoordString() + ". Hit!"));
                     gameSquare.setFill(Color.RED);
                 }
             }
         }
-        enemyHitRequest();
+        singlePlayerController.doWait();
     }
 
     private char[][] populateGuessesBoard() {
@@ -88,11 +92,17 @@ public class SinglePlayerService {
         GameSquare current = userGameBoard.getGameSquare(guess[0], guess[1]);
         current.setHit(true);
         if (current.getType().equals("empty")) {
+            singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy shoots you at " +
+                    current.getCoordString() + " and misses."));
             current.setFill(Color.BLUE);
         } else {
             if (isDead(current.getType(), userGameBoard)) {
+                singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has destroyed your "
+                         + current.getType() + "!"));
                 updateColorToDead(current.getType(), userGameBoard);
             } else {
+                singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy shoots you at " +
+                        current.getCoordString() + " and hits you!"));
                 current.setFill(Color.RED);
             }
         }

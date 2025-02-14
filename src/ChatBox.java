@@ -10,9 +10,9 @@ public class ChatBox extends GridPane {
 
     public ChatBox() {
         chatMessages = new ArrayList<>();
-        setMinWidth(300);
+        setMinWidth(350);
         setMaxWidth(350);
-        setMinHeight(350);
+        setMinHeight(300);
         getRowConstraints().add(new RowConstraints(60));
         setStyle("-fx-background-color: lightgray");
         setPadding(new Insets(0, 0, 0, 8));
