@@ -2,6 +2,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -37,10 +38,13 @@ public class SinglePlayerController extends Scene {
         playerLabel.setFont(boardLabelFont);
         enemyLabel.setFont(boardLabelFont);
         VBox gameBoardPane = new VBox();
+        HBox enemyBoardChatBoxPane = new HBox();
+        ChatBox chatBox = new ChatBox();
+        enemyBoardChatBoxPane.getChildren().addAll(enemyGameBoard, chatBox);
         gameBoardPane.setPadding(new Insets(0, 0, 0, 10));
         Region spacer = new Region();
         spacer.setPrefHeight(40);
-        gameBoardPane.getChildren().addAll(enemyLabel, enemyGameBoard, spacer, userGameBoard, playerLabel);
+        gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, spacer, userGameBoard, playerLabel);
         mainPane.getChildren().add(gameBoardPane);
     }
 }
