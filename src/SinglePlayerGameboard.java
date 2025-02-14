@@ -14,7 +14,6 @@ public class SinglePlayerGameboard extends GameBoard {
         this.boardType = boardType;
         this.shipSquares = new ArrayList<>();
         gameSquares = new GameSquare[10][10];
-        setAlignment(Pos.CENTER);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 gameSquares[i][j] = new GameSquare(this, InitializerGameSquare.WIDTH, InitializerGameSquare.HEIGHT, i, j);
