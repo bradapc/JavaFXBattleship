@@ -49,11 +49,11 @@ public class SinglePlayerService {
                     } else {
                         boolean isCurrentTypeDead = isDead(currentType);
                         if (isCurrentTypeDead) {
-                            guesses[i][j] = GameBoard.types
+                            guesses[i][j] = (char) GameBoard.getNumericalFromType(currentType);
+                        } else {
+                            guesses[i][j] = 'X';
                         }
                     }
-                    //else if not empty, get type and check if that type is dead
-                    //If not dead, render as X. If dead, render as appropriate number.
                 }
             }
         }
@@ -74,6 +74,12 @@ public class SinglePlayerService {
 
     public void enemyHitRequest() {
         char[][] guesses = populateGuessesBoard();
+        for (int i = 0; i < guesses.length; i++) {
+            for (int j = 0; j < guesses[i].length; j++) {
+                System.out.print(guesses[i][j]);
+            }
+            System.out.println();
+        }
         //int[] guess = AIGuess.makeGuess();
     }
 
