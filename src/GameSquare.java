@@ -68,6 +68,10 @@ public class GameSquare extends Rectangle {
         return type;
     }
 
+    public String getCoordString() {
+        return "(" + row + "," + col + ")";
+    }
+
     public SinglePlayerGameboard getParentGameboard() {
         return parentGameboard;
     }

@@ -27,11 +27,17 @@ public class SinglePlayerService {
             swapTurn();
             gameSquare.setHit(true);
             if (gameSquare.getType().equals("empty")) {
+                singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
+                        gameSquare.getCoordString() + " and miss."));
                 gameSquare.setFill(Color.BLUE);
             } else {
                 if (isDead(gameSquare.getType(), enemyGameBoard)) {
+                    singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You destroyed the" +
+                            "enemy " + gameSquare.getType() + "!"));
                     updateColorToDead(gameSquare.getType(), enemyGameBoard);
                 } else {
+                    singlePlayerController.getChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
+                            gameSquare.getCoordString() + ". Hit!"));
                     gameSquare.setFill(Color.RED);
                 }
             }

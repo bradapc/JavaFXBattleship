@@ -11,7 +11,8 @@ public class ChatBox extends GridPane {
     public ChatBox() {
         chatMessages = new ArrayList<>();
         setMinWidth(300);
-        setMinHeight(300);
+        setMaxWidth(350);
+        setMinHeight(350);
         getRowConstraints().add(new RowConstraints(60));
         setStyle("-fx-background-color: lightgray");
         setPadding(new Insets(0, 0, 0, 8));
@@ -19,6 +20,14 @@ public class ChatBox extends GridPane {
         chatMessages.add(new ChatMessage("You shoot at 1,1. Miss!"));
         chatMessages.add(new ChatMessage("Enemy shoots at 1,5. Miss!"));
         chatMessages.add(new ChatMessage("You have hit the enemy's destroyer! Are you secretly a pro?"));
+        updateChatMessages();
+    }
+
+    public void addChatMessage(ChatMessage c) {
+        if (chatMessages.size() == 5) {
+            chatMessages.removeFirst();
+        }
+        chatMessages.add(c);
         updateChatMessages();
     }
 

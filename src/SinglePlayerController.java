@@ -12,6 +12,7 @@ import javafx.scene.text.FontWeight;
 public class SinglePlayerController extends Scene {
     private InitializerService initializerService;
     private VBox mainPane;
+    private ChatBox chatBox;
 
     public SinglePlayerController() {
         this(new VBox());
@@ -40,11 +41,16 @@ public class SinglePlayerController extends Scene {
         VBox gameBoardPane = new VBox();
         HBox enemyBoardChatBoxPane = new HBox();
         ChatBox chatBox = new ChatBox();
+        this.chatBox = chatBox;
         enemyBoardChatBoxPane.getChildren().addAll(enemyGameBoard, chatBox);
         gameBoardPane.setPadding(new Insets(0, 0, 0, 10));
         Region spacer = new Region();
         spacer.setPrefHeight(40);
         gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, spacer, userGameBoard, playerLabel);
         mainPane.getChildren().add(gameBoardPane);
+    }
+
+    public ChatBox getChatBox() {
+        return chatBox;
     }
 }
