@@ -25,12 +25,16 @@ public class SinglePlayerService {
         if (!isValidPlayerHit(gameSquare)) return;
         if (gameSquare.getParentGameboard().getBoardType().equals("ENEMY")) {
             swapTurn();
+            gameSquare.setHit(true);
             if (gameSquare.getType().equals("empty")) {
                 gameSquare.setFill(Color.BLUE);
             } else {
-                gameSquare.setFill(Color.RED);
+                if (isDead(gameSquare.getType(), enemyGameBoard)) {
+                    updateColorToDead(gameSquare.getType(), enemyGameBoard);
+                } else {
+                    gameSquare.setFill(Color.RED);
+                }
             }
-            gameSquare.setHit(true);
         }
         enemyHitRequest();
     }
@@ -47,9 +51,9 @@ public class SinglePlayerService {
                     if (currentType.equals("empty")) {
                         guesses[i][j] = '0';
                     } else {
-                        boolean isCurrentTypeDead = isDead(currentType);
+                        boolean isCurrentTypeDead = isDead(currentType, userGameBoard);
                         if (isCurrentTypeDead) {
-                            guesses[i][j] = (char) GameBoard.getNumericalFromType(currentType);
+                            guesses[i][j] = (char) ('0' + GameBoard.getNumericalFromType(currentType));
                         } else {
                             guesses[i][j] = 'X';
                         }
@@ -60,10 +64,10 @@ public class SinglePlayerService {
         return guesses;
     }
 
-    public boolean isDead(String currentType) {
+    public boolean isDead(String currentType, SinglePlayerGameboard board) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                GameSquare current = userGameBoard.getGameSquare(i, j);
+                GameSquare current = board.getGameSquare(i, j);
                 if (current.getType().equals(currentType) && !current.isHit()) {
                     return false;
                 }
@@ -74,13 +78,30 @@ public class SinglePlayerService {
 
     public void enemyHitRequest() {
         char[][] guesses = populateGuessesBoard();
-        for (int i = 0; i < guesses.length; i++) {
-            for (int j = 0; j < guesses[i].length; j++) {
-                System.out.print(guesses[i][j]);
+        int[] guess = AIGuess.makeGuess(guesses);
+        GameSquare current = userGameBoard.getGameSquare(guess[0], guess[1]);
+        current.setHit(true);
+        if (current.getType().equals("empty")) {
+            current.setFill(Color.BLUE);
+        } else {
+            if (isDead(current.getType(), userGameBoard)) {
+                updateColorToDead(current.getType(), userGameBoard);
+            } else {
+                current.setFill(Color.RED);
             }
-            System.out.println();
         }
-        //int[] guess = AIGuess.makeGuess();
+        swapTurn();
+    }
+
+    public void updateColorToDead(String type, SinglePlayerGameboard board) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                GameSquare current = board.getGameSquare(i, j);
+                if (current.getType().equals(type)) {
+                    current.setFill(Color.BROWN);
+                }
+            }
+        }
     }
 
     public boolean isValidPlayerHit(GameSquare gameSquare) {

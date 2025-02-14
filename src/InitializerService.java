@@ -61,7 +61,7 @@ public class InitializerService {
                     }
                     if (validPlacement) {
                         for (int i = posCol; i < posCol + currentSize; i++) {
-                            enemyGameBoard[posRow][i] = currentSize;
+                            enemyGameBoard[posRow][i] = shipsToPlace;
                         }
                         shipsToPlace--;
                     }
@@ -76,7 +76,7 @@ public class InitializerService {
                     }
                     if (validPlacement) {
                         for (int i = posRow; i < posRow + currentSize; i++) {
-                            enemyGameBoard[i][posCol] = currentSize;
+                            enemyGameBoard[i][posCol] = shipsToPlace;
                         }
                         shipsToPlace--;
                     }

@@ -1,12 +1,10 @@
 public class AIGuess {
     static int[][] heatMap = new int[10][10];
 
-    public static String makeGuess(char[][] guesses)
+    public static int[] makeGuess(char[][] guesses)
     {
         generateHeatmap(guesses);
-        int[] guessCoords = getNextGuess(heatMap, guesses);
-        String guess = String.format("%c%d", 'A' + guessCoords[0], guessCoords[1] + 1);
-        return guess;
+        return getNextGuess(heatMap, guesses);
     }
 
     public static boolean isShipAlive(char[][] guesses, int n) {
