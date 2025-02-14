@@ -12,6 +12,7 @@ public class SinglePlayerService {
     private SinglePlayerGameboard enemyGameBoard;
     private SinglePlayerGameboard userGameBoard;
     private boolean isGameOver;
+    private int turnCount;
 
     public SinglePlayerService(int[][] shipPlacements, SinglePlayerController singlePlayerController) {
         this.shipPlacements = shipPlacements;
@@ -20,11 +21,13 @@ public class SinglePlayerService {
     }
 
     public void swapTurn() {
+        turnCount++;
         if (turn.equals("USER")) {
             turn = "ENEMY";
         } else {
             turn = "USER";
         }
+        singlePlayerController.swapTurnText(turn, turnCount);
     }
 
     public void playerHitRequest(GameSquare gameSquare) {

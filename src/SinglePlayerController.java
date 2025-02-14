@@ -15,6 +15,7 @@ public class SinglePlayerController extends Scene {
     private ChatBox enemyChatBox;
     private ChatBox playerChatBox;
     private SinglePlayerService singlePlayerService;
+    private Label turnText;
 
     public SinglePlayerController() {
         this(new VBox());
@@ -23,7 +24,7 @@ public class SinglePlayerController extends Scene {
     public SinglePlayerController(VBox mainPane) {
         super(mainPane);
         this.mainPane = mainPane;
-        mainPane.setMinHeight(675);
+        mainPane.setMinHeight(700);
         mainPane.setMinWidth(700);
         initializerService = new InitializerService(this);
         initializerService.initializeShipPlacement();
@@ -51,9 +52,11 @@ public class SinglePlayerController extends Scene {
         HBox playerBoardChatBoxPane = new HBox();
         playerBoardChatBoxPane.getChildren().addAll(userGameBoard, playerChatBox);
         gameBoardPane.setPadding(new Insets(0, 0, 0, 10));
-        Region spacer = new Region();
-        spacer.setPrefHeight(40);
-        gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, spacer, playerBoardChatBoxPane, playerLabel);
+        Label turnText = new Label("Turn: USER (0)");
+        turnText.setMinHeight(30);
+        turnText.setFont(Font.font("Lucida Console", 18));
+        this.turnText = turnText;
+        gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, turnText, playerBoardChatBoxPane, playerLabel);
         mainPane.getChildren().add(gameBoardPane);
     }
 
@@ -63,6 +66,12 @@ public class SinglePlayerController extends Scene {
             singlePlayerService.enemyHitRequest();
         });
         pause.play();
+    }
+
+    public void swapTurnText(String turn, int turnCount) {
+        String turnStrCount = "(" + turnCount + ")";
+        String turnStr = String.format("Turn: %-5s%s", turn, turnStrCount);
+        turnText.setText(turnStr);
     }
 
     public ChatBox getEnemyChatBox() {
