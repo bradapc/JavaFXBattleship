@@ -37,7 +37,7 @@ public class SinglePlayerService {
             } else {
                 if (isDead(gameSquare.getType(), enemyGameBoard)) {
                     singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You destroyed the" +
-                            " enemy " + gameSquare.getType() + "!"));
+                            " enemy " + gameSquare.getType() + "!", true));
                     updateColorToDead(gameSquare.getType(), enemyGameBoard);
                 } else {
                     singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
@@ -45,6 +45,11 @@ public class SinglePlayerService {
                     gameSquare.setFill(Color.RED);
                 }
             }
+        }
+        if (enemyGameBoard.isBoardDead()) {
+            singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You have won!", true));
+            turn = "";
+            return;
         }
         singlePlayerController.doWait();
     }
@@ -98,13 +103,18 @@ public class SinglePlayerService {
         } else {
             if (isDead(current.getType(), userGameBoard)) {
                 singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has destroyed your "
-                         + current.getType() + "!"));
+                         + current.getType() + "!", true));
                 updateColorToDead(current.getType(), userGameBoard);
             } else {
                 singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy shoots you at " +
                         current.getCoordString() + " and hits you!"));
                 current.setFill(Color.RED);
             }
+        }
+        if (userGameBoard.isBoardDead()) {
+            singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has won!", true));
+            turn = "";
+            return;
         }
         swapTurn();
     }
