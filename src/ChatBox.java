@@ -28,6 +28,12 @@ public class ChatBox extends GridPane {
         updateChatMessages();
     }
 
+    public void addRestartButton(SinglePlayerController singlePlayerController) {
+        chatMessages.set(0, new ChatMessage(""));
+        updateChatMessages();
+        add(new RestartButton(singlePlayerController), 0, 0);
+    }
+
     public void updateChatMessages() {
         getChildren().clear();
         for (int i = 0; i < chatMessages.size(); i++) {

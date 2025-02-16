@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    public Stage primaryStage;
     @Override
     public void start(Stage primaryStage) {
         Scene mainMenuScene = new Scene(new MainMenuPane(primaryStage));

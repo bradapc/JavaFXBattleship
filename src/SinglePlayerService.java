@@ -55,6 +55,7 @@ public class SinglePlayerService {
             isGameOver = true;
             singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You have won!", true));
             turn = "";
+            singlePlayerController.toggleRestartButton();
             return;
         }
         singlePlayerController.doWait();
@@ -122,6 +123,7 @@ public class SinglePlayerService {
             singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has won!", true));
             updateHiddenEnemyShipColors();
             turn = "";
+            singlePlayerController.toggleRestartButton();
             return;
         }
         swapTurn();

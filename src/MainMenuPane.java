@@ -18,7 +18,7 @@ public class MainMenuPane extends VBox {
         buttonHolder.setSpacing(30);
         Button playSingleButton = new Button("Play Singleplayer");
         playSingleButton.setOnAction(e -> {
-            primaryStage.setScene(new SinglePlayerController());
+            primaryStage.setScene(new SinglePlayerController(primaryStage));
         });
         Button playMultiButton = new Button("Play Multiplayer");
         setSpacing(20);

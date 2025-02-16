@@ -3,11 +3,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import javafx.stage.Stage;
 
 public class SinglePlayerController extends Scene {
     private InitializerService initializerService;
@@ -16,9 +16,11 @@ public class SinglePlayerController extends Scene {
     private ChatBox playerChatBox;
     private SinglePlayerService singlePlayerService;
     private Label turnText;
+    private Stage primaryStage;
 
-    public SinglePlayerController() {
+    public SinglePlayerController(Stage primaryStage) {
         this(new VBox());
+        this.primaryStage = primaryStage;
     }
 
     public SinglePlayerController(VBox mainPane) {
@@ -58,6 +60,7 @@ public class SinglePlayerController extends Scene {
         this.turnText = turnText;
         gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, turnText, playerBoardChatBoxPane, playerLabel);
         mainPane.getChildren().add(gameBoardPane);
+        toggleRestartButton();
     }
 
     public void doWait() {
@@ -80,5 +83,13 @@ public class SinglePlayerController extends Scene {
 
     public ChatBox getPlayerChatBox() {
         return playerChatBox;
+    }
+
+    public void toggleRestartButton() {
+        playerChatBox.addRestartButton(this);
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }
