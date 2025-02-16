@@ -13,6 +13,7 @@ public class ChatBox extends GridPane {
         setMinWidth(350);
         setMaxWidth(350);
         setMinHeight(300);
+        setHgap(55);
         getRowConstraints().add(new RowConstraints(60));
         setStyle("-fx-background-color: lightgray");
         setPadding(new Insets(0, 0, 0, 8));
@@ -32,6 +33,7 @@ public class ChatBox extends GridPane {
         chatMessages.set(0, new ChatMessage(""));
         updateChatMessages();
         add(new RestartButton(singlePlayerController), 0, 0);
+        add(new AbandonButton(singlePlayerController), 1, 0);
     }
 
     public void updateChatMessages() {
