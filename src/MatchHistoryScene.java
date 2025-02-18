@@ -21,10 +21,10 @@ public class MatchHistoryScene extends Scene {
                     setText(null);
                 } else if (item.getWinner().equals("user")) {
                     setText(item.getMatchTime() + ": " + item.getWinner() + " won in " + item.getTurnCount() + " turns.");
-                    setStyle("-fx-control-inner-background: green;");
+                    setStyle("-fx-control-inner-background: #039e03; -fx-cell-size: 40px; -fx-font-family: Book Antiqua; -fx-font-size: 16px");
                 } else {
                     setText(item.getMatchTime() + ": " + item.getWinner() + " won in " + item.getTurnCount() + " turns.");
-                    setStyle("-fx-control-inner-background: red;");
+                    setStyle("-fx-control-inner-background: #d92e2e;  -fx-cell-size: 40px; -fx-font-family: Book Antiqua; -fx-font-size: 16px");
                 }
             }
         });
