@@ -20,10 +20,16 @@ public class MainMenuPane extends VBox {
         playSingleButton.setOnAction(e -> {
             primaryStage.setScene(new SinglePlayerController(primaryStage));
         });
+        Button singleMatchHistory = new Button("Match History");
+        VBox singleContainer = new VBox();
+        singleContainer.setAlignment(Pos.CENTER);
+        singleContainer.getChildren().addAll(playSingleButton, singleMatchHistory);
+        singleContainer.setSpacing(8);
+        singleMatchHistory.setMinWidth(playSingleButton.getMaxWidth());
         Button playMultiButton = new Button("Play Multiplayer");
         setSpacing(20);
         setPadding(new Insets(0, 0, 15, 0));
-        buttonHolder.getChildren().addAll(playSingleButton, playMultiButton);
+        buttonHolder.getChildren().addAll(singleContainer, playMultiButton);
         getChildren().addAll(titleImageView, buttonHolder);
     }
 }

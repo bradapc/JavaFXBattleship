@@ -60,6 +60,7 @@ public class SinglePlayerController extends Scene {
         this.turnText = turnText;
         gameBoardPane.getChildren().addAll(enemyLabel, enemyBoardChatBoxPane, turnText, playerBoardChatBoxPane, playerLabel);
         mainPane.getChildren().add(gameBoardPane);
+        toggleRestartButton();
     }
 
     public void doWait() {
