@@ -1,4 +1,6 @@
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -28,7 +30,16 @@ public class MatchHistoryScene extends Scene {
                 }
             }
         });
-        mainPane.getChildren().add(lv);
+        Button viewReplayButton = new Button("View Selected Replay");
+        viewReplayButton.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px;");
+        viewReplayButton.setOnAction(e -> {
+            MatchOutcome current = lv.getSelectionModel().getSelectedItem();
+            if (current == null) {
+                return;
+            }
+            //add replay
+        });
+        mainPane.getChildren().addAll(viewReplayButton, lv);
     }
 
     public MatchHistoryScene(VBox mainPane) {
