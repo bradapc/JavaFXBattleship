@@ -1,4 +1,6 @@
-public class MatchOutcome {
+import java.io.Serializable;
+
+public class MatchOutcome implements Serializable {
     private String winner;
     private int turnCount;
 
