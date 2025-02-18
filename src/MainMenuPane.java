@@ -21,6 +21,12 @@ public class MainMenuPane extends VBox {
             primaryStage.setScene(new SinglePlayerController(primaryStage));
         });
         Button singleMatchHistory = new Button("Match History");
+        singleMatchHistory.setOnAction(e -> {
+            Stage matchHistory = new Stage();
+            matchHistory.setTitle("Single Player Match History");
+            matchHistory.setScene(new MatchHistory());
+            matchHistory.show();
+        });
         VBox singleContainer = new VBox();
         singleContainer.setAlignment(Pos.CENTER);
         singleContainer.getChildren().addAll(playSingleButton, singleMatchHistory);
