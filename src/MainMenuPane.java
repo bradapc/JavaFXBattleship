@@ -24,7 +24,7 @@ public class MainMenuPane extends VBox {
         singleMatchHistory.setOnAction(e -> {
             Stage matchHistory = new Stage();
             matchHistory.setTitle("Single Player Match History");
-            matchHistory.setScene(new MatchHistory());
+            matchHistory.setScene(new MatchHistoryScene());
             matchHistory.show();
         });
         VBox singleContainer = new VBox();

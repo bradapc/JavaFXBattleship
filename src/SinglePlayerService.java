@@ -56,6 +56,7 @@ public class SinglePlayerService {
             singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You have won!", true));
             turn = "";
             singlePlayerController.toggleRestartButton();
+            saveMatch("user");
             return;
         }
         singlePlayerController.doWait();
@@ -124,9 +125,15 @@ public class SinglePlayerService {
             updateHiddenEnemyShipColors();
             turn = "";
             singlePlayerController.toggleRestartButton();
+            saveMatch("enemy");
             return;
         }
         swapTurn();
+    }
+
+    public void saveMatch(String winner) {
+        MatchHistory mh = new MatchHistory();
+        mh.saveMatchOutcome(new MatchOutcome(winner, turnCount));
     }
 
     public void updateHiddenEnemyShipColors() {

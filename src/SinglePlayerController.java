@@ -9,6 +9,8 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class SinglePlayerController extends Scene {
     private InitializerService initializerService;
     private VBox mainPane;
