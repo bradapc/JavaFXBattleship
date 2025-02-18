@@ -1,8 +1,6 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class MatchHistoryScene extends Scene {
@@ -35,7 +33,13 @@ public class MatchHistoryScene extends Scene {
         viewReplayButton.setOnAction(e -> {
             MatchOutcome current = lv.getSelectionModel().getSelectedItem();
             if (current == null) {
-                return;
+                Dialog<String> error = new Dialog<String>();
+                error.setTitle("No Replay Selected");
+                ButtonType OK = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+                error.setContentText("Select a replay to view");
+                error.getDialogPane().getButtonTypes().add(OK);
+                error.showAndWait();
+
             }
             //add replay
         });
