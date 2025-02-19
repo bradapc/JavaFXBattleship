@@ -1,7 +1,9 @@
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -51,6 +53,17 @@ public class Replay extends Scene {
         );
         timeline.setCycleCount(cycles);
         timeline.play();
+        timeline.setOnFinished(e -> {
+            Dialog<String> replayFinishedDialog = new Dialog<String>();
+            replayFinishedDialog.setTitle("Replay Finished");
+            ButtonType OK = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+            replayFinishedDialog.setContentText("The replay ended after " + outcome.getTurnCount() + " turns" +
+                    "\nOutcome: " + outcome.getWinner() + " wins." +
+                    "\n\nPlayer had " + outcome.getHitRate("user") + " shooting percent." +
+                    "\nEnemy had " + outcome.getHitRate("enemy") + " shooting percent.");
+            replayFinishedDialog.getDialogPane().getButtonTypes().add(OK);
+            replayFinishedDialog.show();
+        });
     }
 
     public void updateHits(ReplayBoard board, int index) {

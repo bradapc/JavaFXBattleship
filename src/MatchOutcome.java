@@ -1,13 +1,37 @@
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MatchOutcome implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 6529685098267757690L;
     private String winner;
     private int turnCount;
     private LocalDate matchTime;
     private ArrayList<Character[][]> playerGuesses;
     private ArrayList<Character[][]> enemyGuesses;
+
+    public double getHitRate(String player) {
+        Character[][] finalBoard;
+        if (player.equals("user")) {
+            finalBoard = enemyGuesses.getLast();
+        } else {
+            finalBoard = playerGuesses.getLast();
+        }
+        int shipsHit = 0;
+        int hits = 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (finalBoard[i][j] == '.') continue;
+                hits++;
+                if (finalBoard[i][j] == 'X' || (finalBoard[i][j] > '0' && finalBoard[i][j] < '6')) {
+                    shipsHit++;
+                }
+            }
+        }
+        return Math.round(100 * ((double) shipsHit / hits));
+    }
 
     public ArrayList<Character[][]> getPlayerGuesses() {
         return playerGuesses;
