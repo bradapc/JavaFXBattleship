@@ -1,4 +1,5 @@
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 abstract public class GameBoard extends GridPane {
     private InitializerGameSquare[][] initializerGameSquares;
@@ -11,6 +12,12 @@ abstract public class GameBoard extends GridPane {
     };
     public static final int[] sizes = {2, 3, 3, 4, 5};
     protected int[][] shipPlacements;
+
+    public static final Color HIT_SHIP = Color.RED;
+    public static final Color WATER = Color.AQUA;
+    public static final Color HIDDEN_PLAYER_SHIP = new Color(0,0,0, 0.5);
+    public static final Color MISSED_HIT = Color.BLUE;
+    public static final Color SUNK_SHIP = Color.BROWN;
 
     public abstract void renderColors();
 

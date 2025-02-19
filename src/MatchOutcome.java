@@ -13,6 +13,10 @@ public class MatchOutcome implements Serializable {
         return playerGuesses;
     }
 
+    public ArrayList<Character[][]> getEnemyGuesses() {
+        return enemyGuesses;
+    }
+
     public void addPlayerGuess(Character[][] board) {
         playerGuesses.add(board);
     }

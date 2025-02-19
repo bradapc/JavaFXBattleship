@@ -40,7 +40,7 @@ public class SinglePlayerService {
             if (gameSquare.getType().equals("empty")) {
                 singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
                         gameSquare.getCoordString() + " and miss."));
-                gameSquare.setFill(Color.BLUE);
+                gameSquare.setFill(GameBoard.MISSED_HIT);
             } else {
                 if (isDead(gameSquare.getType(), enemyGameBoard)) {
                     singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You destroyed the" +
@@ -49,7 +49,7 @@ public class SinglePlayerService {
                 } else {
                     singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You shoot the enemy at " +
                             gameSquare.getCoordString() + ". Hit!"));
-                    gameSquare.setFill(Color.RED);
+                    gameSquare.setFill(GameBoard.HIT_SHIP);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class SinglePlayerService {
         if (current.getType().equals("empty")) {
             singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy shoots you at " +
                     current.getCoordString() + " and misses."));
-            current.setFill(Color.BLUE);
+            current.setFill(GameBoard.MISSED_HIT);
         } else {
             if (isDead(current.getType(), userGameBoard)) {
                 singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has destroyed your "
@@ -144,7 +144,7 @@ public class SinglePlayerService {
             } else {
                 singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy shoots you at " +
                         current.getCoordString() + " and hits you!"));
-                current.setFill(Color.RED);
+                current.setFill(GameBoard.HIT_SHIP);
             }
         }
         matchOutcome.addPlayerGuess(populateGuessesBoardObject(userGameBoard));
@@ -186,7 +186,7 @@ public class SinglePlayerService {
             for (int j = 0; j < 10; j++) {
                 GameSquare current = board.getGameSquare(i, j);
                 if (current.getType().equals(type)) {
-                    current.setFill(Color.BROWN);
+                    current.setFill(GameBoard.SUNK_SHIP);
                 }
             }
         }

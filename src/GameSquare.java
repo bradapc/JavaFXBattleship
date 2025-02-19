@@ -43,13 +43,13 @@ public class GameSquare extends Rectangle {
     public Color getColorFromType() {
         if (type.equals("destroyer") || type.equals("submarine") ||
                 type.equals("cruiser") || type.equals("battleship") || type.equals("carrier")) {
-            if (hit) return Color.RED;
+            if (hit) return GameBoard.HIT_SHIP;
             if (parentGameboard.getBoardType().equals("USER")) {
-                return new Color(0,0,0, 0.5);
+                return GameBoard.HIDDEN_PLAYER_SHIP;
             }
             return Color.BLACK;
         }
-        return Color.AQUA;
+        return GameBoard.WATER;
     }
 
     public boolean isHit() {
