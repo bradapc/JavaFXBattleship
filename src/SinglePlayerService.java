@@ -13,11 +13,13 @@ public class SinglePlayerService {
     private SinglePlayerGameboard userGameBoard;
     private boolean isGameOver;
     private int turnCount;
+    private MatchOutcome matchOutcome;
 
     public SinglePlayerService(int[][] shipPlacements, SinglePlayerController singlePlayerController) {
         this.shipPlacements = shipPlacements;
         this.singlePlayerController = singlePlayerController;
         turn = "USER";
+        matchOutcome = new MatchOutcome();
     }
 
     public void swapTurn() {
@@ -51,6 +53,7 @@ public class SinglePlayerService {
                 }
             }
         }
+        matchOutcome.addEnemyGuess(populateGuessesBoardObject(enemyGameBoard));
         if (enemyGameBoard.isBoardDead()) {
             isGameOver = true;
             singlePlayerController.getEnemyChatBox().addChatMessage(new ChatMessage("You have won!", true));
@@ -62,11 +65,11 @@ public class SinglePlayerService {
         singlePlayerController.doWait();
     }
 
-    private char[][] populateGuessesBoard() {
-        char[][] guesses = new char[10][10];
+    private Character[][] populateGuessesBoardObject(SinglePlayerGameboard board) {
+        Character[][] guesses = new Character[10][10];
         for (int i = 0; i < guesses.length; i++) {
             for (int j = 0; j < guesses[i].length; j++) {
-                GameSquare current = userGameBoard.getGameSquare(i, j);
+                GameSquare current = board.getGameSquare(i, j);
                 if (!current.isHit()) {
                     guesses[i][j] = '.';
                 } else {
@@ -74,7 +77,32 @@ public class SinglePlayerService {
                     if (currentType.equals("empty")) {
                         guesses[i][j] = '0';
                     } else {
-                        boolean isCurrentTypeDead = isDead(currentType, userGameBoard);
+                        boolean isCurrentTypeDead = isDead(currentType, board);
+                        if (isCurrentTypeDead) {
+                            guesses[i][j] = (char) ('0' + GameBoard.getNumericalFromType(currentType));
+                        } else {
+                            guesses[i][j] = 'X';
+                        }
+                    }
+                }
+            }
+        }
+        return guesses;
+    }
+
+    private char[][] populateGuessesBoard(SinglePlayerGameboard board) {
+        char[][] guesses = new char[10][10];
+        for (int i = 0; i < guesses.length; i++) {
+            for (int j = 0; j < guesses[i].length; j++) {
+                GameSquare current = board.getGameSquare(i, j);
+                if (!current.isHit()) {
+                    guesses[i][j] = '.';
+                } else {
+                    String currentType = current.getType();
+                    if (currentType.equals("empty")) {
+                        guesses[i][j] = '0';
+                    } else {
+                        boolean isCurrentTypeDead = isDead(currentType, board);
                         if (isCurrentTypeDead) {
                             guesses[i][j] = (char) ('0' + GameBoard.getNumericalFromType(currentType));
                         } else {
@@ -100,7 +128,7 @@ public class SinglePlayerService {
     }
 
     public void enemyHitRequest() {
-        char[][] guesses = populateGuessesBoard();
+        char[][] guesses = populateGuessesBoard(userGameBoard);
         int[] guess = AIGuess.makeGuess(guesses);
         GameSquare current = userGameBoard.getGameSquare(guess[0], guess[1]);
         current.setHit(true);
@@ -119,6 +147,7 @@ public class SinglePlayerService {
                 current.setFill(Color.RED);
             }
         }
+        matchOutcome.addPlayerGuess(populateGuessesBoardObject(userGameBoard));
         if (userGameBoard.isBoardDead()) {
             isGameOver = true;
             singlePlayerController.getPlayerChatBox().addChatMessage(new ChatMessage("The enemy has won!", true));
@@ -133,7 +162,8 @@ public class SinglePlayerService {
 
     public void saveMatch(String winner) {
         MatchHistory mh = new MatchHistory();
-        mh.saveMatchOutcome(new MatchOutcome(winner, turnCount));
+        matchOutcome.setOutcome(winner, turnCount);
+        mh.saveMatchOutcome(matchOutcome);
     }
 
     public void updateHiddenEnemyShipColors() {

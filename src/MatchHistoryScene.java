@@ -2,6 +2,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.util.Arrays;
 
 public class MatchHistoryScene extends Scene {
     private VBox mainPane;
@@ -39,9 +42,12 @@ public class MatchHistoryScene extends Scene {
                 error.setContentText("Select a replay to view");
                 error.getDialogPane().getButtonTypes().add(OK);
                 error.showAndWait();
-
+                return;
             }
-            //add replay
+            Stage replayStage = new Stage();
+            replayStage.setScene(new Replay(current));
+            replayStage.setTitle("Replay");
+            replayStage.show();
         });
         mainPane.getChildren().addAll(viewReplayButton, lv);
     }

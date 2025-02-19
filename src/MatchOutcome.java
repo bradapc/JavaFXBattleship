@@ -1,17 +1,35 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class MatchOutcome implements Serializable {
     private String winner;
     private int turnCount;
     private LocalDate matchTime;
+    private ArrayList<Character[][]> playerGuesses;
+    private ArrayList<Character[][]> enemyGuesses;
 
-    //To-do: replay system?
+    public ArrayList<Character[][]> getPlayerGuesses() {
+        return playerGuesses;
+    }
 
-    public MatchOutcome(String winner, int turnCount) {
+    public void addPlayerGuess(Character[][] board) {
+        playerGuesses.add(board);
+    }
+
+    public void addEnemyGuess(Character[][] board) {
+        enemyGuesses.add(board);
+    }
+
+    public MatchOutcome() {
+        matchTime = LocalDate.now();
+        playerGuesses = new ArrayList<>();
+        enemyGuesses = new ArrayList<>();
+    }
+
+    public void setOutcome(String winner, int turnCount) {
         this.winner = winner;
         this.turnCount = turnCount;
-        matchTime = LocalDate.now();
     }
 
     public String getWinner() {
